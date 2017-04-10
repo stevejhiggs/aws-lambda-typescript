@@ -54,3 +54,14 @@ There are lots of other options available but it's probably best to look at the 
 ## example
 
 There is an example function set up in the "example" directory in this repo. 
+
+## how it works
+
+When running locally we spin up an express instance then use "ts-node" to allow the transparent usage of typescript and allow debugging to work. This is great but has some overhead, to keep spin-up times to a miminum we do something different when we package everything up for release. When we package the function up we run it through webpack and do a one-time transform to javascript, in this way we pay no runtime penalty for typescript compilation.
+
+## todo
+
+* A simple way to run tests
+* check interaction with other aws resources when running locally
+
+
