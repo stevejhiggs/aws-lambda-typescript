@@ -27,7 +27,7 @@ The following commands are then available:
 
 * `gulp lambda:init` - sets up the above files
 * `gulp lambda:run` - runs your function in a local express instance, defaults to port 9000
-* `gulp lambda:package` - packages your function up ready for deployment
+* `gulp lambda:package` - packages your function up ready for deployment by bundling everything together with webpack
 * `gulp lambda:deploy` - packages and deploys your function
 
 ## debugging
