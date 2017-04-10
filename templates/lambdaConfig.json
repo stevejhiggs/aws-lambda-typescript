@@ -1,6 +1,0 @@
-{
-  "awsRegion": "eu-west-1",
-  "lambda": {
-    "name": "myFunction"
-  }
-}

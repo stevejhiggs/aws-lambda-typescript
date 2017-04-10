@@ -1,0 +1,28 @@
+{
+  "name": "mynicefunction",
+  "version": "0.0.1",
+  "description": "an example function built with aws-lambda-typescript",
+  "main": "gulp lambda:run",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevejhiggs/aws-lambda-typescript.git"
+  },
+  "keywords": [
+    "typescript",
+    "lamdba",
+    "aws"
+  ],
+  "author": "steve higgs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevejhiggs/aws-lambda-typescript/issues"
+  },
+  "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
+  "dependencies": {
+    "aws-lambda-typescript": "^0.0.1",
+    "gulp": "^3.9.1"
+  }
+}
