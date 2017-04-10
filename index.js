@@ -9,6 +9,7 @@ const gutil = require('gulp-util');
 const tsPipeline = require('gulp-webpack-typescript-pipeline');
 const AWS = require('aws-sdk');
 const localServer = require('./localServer');
+var awsLambda = require("node-aws-lambda");
 
 const handleError = (msg) => {
   gutil.log(gutil.colors.red('ERROR!', msg)) ;
@@ -16,7 +17,7 @@ const handleError = (msg) => {
 }
 
 const getLambdaConfig = (lambdaDir) => {
-  const configPath = path.join(lambdaDir, 'lambdaConfig.json');
+  const configPath = path.join(lambdaDir, 'lambda-config.js');
   try {
     fs.existsSync(configPath);  
     return require(configPath);
@@ -97,24 +98,13 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     .pipe(gulp.dest(distRootDir));
   });
 
-  gulp.task('lambda:update', (done) => {
-    const functionName = lambdaName;
+  gulp.task('lambda:upload', (done) => {
+    const config = getLambdaConfig(lambdaDir);
+    if (!config.functionName) {
+      config.functionName = lambdaName;
+    }
 
-    const params = {
-      FunctionName: functionName,
-      Publish: true
-    };
-
-    fs.readFile( path.join(distRootDir, `${lambdaName}.zip`),(err, data) => {
-      if (err) handleError(err);
-
-      params['ZipFile'] = data;
-      lambda.updateFunctionCode(params,(err, data) => {
-        if (err) handleError(err);
-        gutil.log(gutil.colors.green('Successfully updated'), gutil.colors.cyan(lambdaName));
-        gutil.log(data);
-      });
-    });
+    awsLambda.deploy(path.join(distRootDir, `${lambdaName}.zip`), config, done);
   });
 
   gulp.task('lambda:lint', ['tsPipeline:build:dev'], (done) => {

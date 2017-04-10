@@ -28,7 +28,7 @@ The following commands are then available:
 * `gulp lambda:init` - sets up the above files
 * `gulp lambda:run` - runs your function in a local express instance, defaults to port 9000
 * `gulp lambda:package` - packages your function up ready for deployment
-* `gulp lambda:deploy` - deploys your function
+* `gulp lambda:deploy` - packages and deploys your function
 
 ## debugging
 
@@ -40,11 +40,13 @@ In order for debugging typescript to work in vscode the "protocol" setting must 
 
 ## options 
 
-By creating a file in the root of your project called lambdaConfig.json you can set the following options:
+By creating a file in the root of your project called lambda-config.js you can set the following options:
 
 ```
-{
+module.exports = {
   localPort: 9000 // set the port to run the local server on
   region: 'us-west-2' // set the aws region
-}
+};
 ```
+
+There are lots of other options available but it's probably best to look at the lambda-config.js file in https://github.com/ThoughtWorksStudios/node-aws-lambda as we use that.

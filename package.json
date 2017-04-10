@@ -34,6 +34,7 @@
     "gulp-util": "^3.0.8",
     "gulp-webpack-typescript-pipeline": "^5.0.2",
     "gulp-zip": "^4.0.0",
+    "node-aws-lambda": "^0.1.8",
     "nodemon": "^1.11.0",
     "pino-http": "^2.5.0",
     "run-sequence": "^1.2.2",
