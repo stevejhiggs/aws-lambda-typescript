@@ -50,3 +50,7 @@ module.exports = {
 ```
 
 There are lots of other options available but it's probably best to look at the lambda-config.js file in https://github.com/ThoughtWorksStudios/node-aws-lambda as we use that.
+
+## example
+
+There is an example function set up in the "example" directory in this repo. 
