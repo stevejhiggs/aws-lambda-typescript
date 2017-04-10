@@ -1,39 +1,64 @@
 const fs = require('fs');
 const path = require('path');
+const copy = require('copy');
 const install = require('gulp-install');
 const zip = require('gulp-zip');
+const writeFile = require('write');
 const del = require('del');
 const gutil = require('gulp-util');
 const tsPipeline = require('gulp-webpack-typescript-pipeline');
 const AWS = require('aws-sdk');
 const localServer = require('./localServer');
 
-const handleError = function (msg) {
+const handleError = (msg) => {
   gutil.log(gutil.colors.red('ERROR!', msg)) ;
   process.exit(1);
 }
 
-const registerBuildGulpTasks = (gulp, lambdaDir, options) => {
-  const runSequence = require('run-sequence').use(gulp);
+const getLambdaConfig = (lambdaDir) => {
+  // just use require for now, use real file loading when we support multiple lambdas
+  return require(path.join(lambdaDir, 'lambdaConfig.json'));
+}
 
-  const localOptions = options || { 
-    lambda: {} 
-  };
+const runLocalServer = (lambdaDir, lambdaName) => {
+  localServer.runServer( path.join(lambdaDir, `${lambdaName}.ts`), getLambdaConfig(lambdaDir));
+};
 
-  const lambda = new AWS.Lambda({apiVersion: '2015-03-31'}); 
-  AWS.config.region = localOptions.awsRegion || 'us-west-2';
-  const lambdaName = localOptions.lambda.name || 'lambda';
+const registerBuildGulpTasks = (gulp, lambdaDir) => {
+  //check that directory exists
+  try {
+    fs.existsSync(lambdaDir);  
+  } catch(e) {
+    console.log(e);
+    handleError(lambdaDir + ' does not exist');
+  }
+
+  //check that config exists
+  try {
+    fs.existsSync(path.join(lambdaDir, 'lambdaConfig.json'));  
+  } catch(e) {
+    console.log(e);
+    handleError('lambdaConfig.json does not exist in the same directory as the lambda function');
+  }
+
+  const localOptions = getLambdaConfig(lambdaDir);
+  const lambdaName = localOptions.lambda.name;
   const pathToLambda = path.join(lambdaDir, `${lambdaName}.ts`);
   const distRootDir = path.join(lambdaDir, 'dist');
   const dist = path.join(distRootDir, lambdaName);
+  
 
-  //check that directory exists
+  //check that lambda exists
   try {
     fs.existsSync(pathToLambda);  
   } catch(e) {
     console.log(e);
     handleError(pathToLambda + ' does not exist');
   }
+
+  const runSequence = require('run-sequence').use(gulp);
+  const lambda = new AWS.Lambda({apiVersion: '2015-03-31'}); 
+  AWS.config.region = localOptions.awsRegion || 'us-west-2';
 
   const tsOptions = {
     entryPoints: {
@@ -51,7 +76,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir, options) => {
   });
 
   gulp.task('lambda:run', (done) => {
-    localServer.runServer(pathToLambda, localOptions);
+    runLocalServer(lambdaDir, lambdaName);
   });
 
   gulp.task('lambda:info', (done) => {
@@ -123,6 +148,16 @@ const registerBuildGulpTasks = (gulp, lambdaDir, options) => {
        done
     );
   });
+
+  gulp.task('lambda:init', (done) => {
+    // just enough of an entry point to allow easy debugging
+    const debugString = `require('aws-lambda-typescript').runLocalServer(__dirname, '${lambdaName}');`;
+    writeFile.sync(path.join(lambdaDir, 'debug.js'), debugString);
+    copy(path.join(__dirname,'templates','**.*'), lambdaDir, done);
+  });
 };
 
-module.exports = registerBuildGulpTasks;
+module.exports = { 
+  registerBuildGulpTasks,
+  runLocalServer
+};
