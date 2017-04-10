@@ -1,0 +1,40 @@
+{
+  "name": "aws-lambda-typescript",
+  "version": "1.0.0",
+  "description": "simple build pipeline for creating lambda functions in typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevejhiggs/aws-lambda-typescript.git"
+  },
+  "keywords": [
+    "typescript",
+    "lamdba",
+    "aws"
+  ],
+  "author": "steve higgs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevejhiggs/aws-lambda-typescript/issues"
+  },
+  "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
+  "dependencies": {
+    "@types/aws-lambda": "0.0.9",
+    "@types/node": "^7.0.12",
+    "aws-sdk": "^2.40.0",
+    "body-parser": "^1.17.1",
+    "del": "^2.2.2",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-install": "^1.1.0",
+    "gulp-util": "^3.0.8",
+    "gulp-webpack-typescript-pipeline": "^5.0.2",
+    "gulp-zip": "^4.0.0",
+    "pino-http": "^2.5.0",
+    "run-sequence": "^1.2.2",
+    "ts-node": "^3.0.2"
+  }
+}
