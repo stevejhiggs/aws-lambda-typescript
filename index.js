@@ -23,7 +23,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir, options) => {
   const lambda = new AWS.Lambda({apiVersion: '2015-03-31'}); 
   AWS.config.region = localOptions.awsRegion || 'us-west-2';
   const lambdaName = localOptions.lambda.name || 'lambda';
-  const pathToLambda = path.join(lambdaDir);
+  const pathToLambda = path.join(lambdaDir, `${lambdaName}.ts`);
   const distRootDir = path.join(lambdaDir, 'dist');
   const dist = path.join(distRootDir, lambdaName);
 
@@ -37,7 +37,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir, options) => {
 
   const tsOptions = {
     entryPoints: {
-      index: path.join(pathToLambda, `${lambdaName}.ts`)
+      index: pathToLambda
     },
     outputDir: dist
   };
