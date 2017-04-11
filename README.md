@@ -23,6 +23,7 @@ The following files will be created in the root of your project:
 * tslint.json - configures the linter
 * tsconfig.json - configures the typescript compiler
 * debug.js - debugging entrypoint allows simple debugging of your function in a local express instance
+* lambda-config.js - contains the deployment details for your function
 
 The following commands are then available:
 
@@ -42,20 +43,16 @@ In order for debugging typescript to work in vscode the "protocol" setting must 
 
 ## options 
 
-By creating a file in the root of your project called lambda-config.js you can set the following options:
+By altering lambda-config.js in the root of your project you can set the following options:
 
 ```
 module.exports = {
-  localPort: 9000 // set the port to run the local server on
+  localPort: 9000, // set the port to run the local server on
   region: 'us-west-2' // set the aws region
 };
 ```
 
 There are lots of other options available but it's probably best to look at the lambda-config.js file in https://github.com/ThoughtWorksStudios/node-aws-lambda as we use that.
-
-## example
-
-There is an example function set up in the "example" directory in this repo. 
 
 ## how it works
 

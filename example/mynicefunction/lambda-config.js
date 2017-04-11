@@ -6,4 +6,4 @@ module.exports = {
   memorySize: 128,
   publish: false, // default: false,
   runtime: 'nodejs6.10'
-};
+}

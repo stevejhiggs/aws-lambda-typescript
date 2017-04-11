@@ -25,16 +25,24 @@ const getLambdaConfig = (lambdaDir) => {
   }
 };
 
+
 const runLocalServer = (lambdaDir) => {
   localServer.runServer(path.join(lambdaDir, 'index.ts'), getLambdaConfig(lambdaDir));
 };
 
 const registerBuildGulpTasks = (gulp, lambdaDir) => {
-  const localOptions = getLambdaConfig(lambdaDir);
   const lambdaName = lambdaDir.split(path.sep).pop();
   const pathToLambda = path.join(lambdaDir, 'index.ts');
   const distRootDir = path.join(lambdaDir, 'dist');
   const dist = path.join(distRootDir, lambdaName);
+  const config = getLambdaConfig(lambdaDir);
+  if (config.region) {
+    AWS.region = config.region;
+  }
+
+  if (!config.functionName) {
+    config.functionName = lambdaName;
+  }
 
   // check that lambda exists
   try {
@@ -45,8 +53,13 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   }
 
   const runSequence = require('run-sequence').use(gulp);
-  const lambda = new AWS.Lambda({ apiVersion: '2015-03-31' });
-  AWS.config.region = localOptions.region || 'us-west-2';
+  const lambda = new AWS.Lambda({
+    apiVersion: '2015-03-31',
+    region: config.region || 'us-west-2',
+    accessKeyId: 'accessKeyId' in config ? config.accessKeyId : '',
+    secretAccessKey: 'secretAccessKey' in config ? config.secretAccessKey : '',
+    sessionToken: 'sessionToken' in config ? config.sessionToken : ''
+  });
 
   const tsOptions = {
     entryPoints: {
@@ -98,11 +111,6 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   });
 
   gulp.task('lambda:upload', (done) => {
-    const config = getLambdaConfig(lambdaDir);
-    if (!config.functionName) {
-      config.functionName = lambdaName;
-    }
-
     awsLambda.deploy(path.join(distRootDir, `${lambdaName}.zip`), config, done);
   });
 
@@ -121,7 +129,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   gulp.task('lambda:deploy', (done) => {
     runSequence(
       'lambda:package',
-      'lambda:update',
+      'lambda:upload',
        done
     );
   });
