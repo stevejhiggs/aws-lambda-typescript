@@ -128,9 +128,6 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   });
 
   gulp.task('lambda:init', (done) => {
-    // just enough of an entry point to allow easy debugging
-    const debugString = `require('aws-lambda-typescript').runLocalServer(__dirname, '${lambdaName}');`;
-    writeFile.sync(path.join(lambdaDir, 'debug.js'), debugString);
     copy(path.join(__dirname,'templates','**.*'), lambdaDir, done);
   });
 

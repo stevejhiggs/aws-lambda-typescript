@@ -19,6 +19,7 @@ awsLambdaTypescript.registerBuildGulpTasks(gulp, __dirname);
 
 The following files will be created in the root of your project:
 
+* index.ts - the entry point of your typescript lambda function
 * tslint.json - configures the linter
 * tsconfig.json - configures the typescript compiler
 * debug.js - debugging entrypoint allows simple debugging of your function in a local express instance
@@ -29,6 +30,7 @@ The following commands are then available:
 * `gulp lambda:run` - runs your function in a local express instance, defaults to port 9000
 * `gulp lambda:package` - packages your function up ready for deployment by bundling everything together with webpack
 * `gulp lambda:deploy` - packages and deploys your function
+* `gulp lambda:info` - get info about the current state of your lambda function
 
 ## debugging
 
