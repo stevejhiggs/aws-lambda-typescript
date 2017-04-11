@@ -81,7 +81,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   });
 
   gulp.task('lambda:info', (done) => {
-    lambda.getFunction({ FunctionName: lambdaName }, (err) => {
+    lambda.getFunction({ FunctionName: lambdaName }, (err, data) => {
       if (err) {
         if (err.statusCode === 404) {
           gutil.log(`Unable to find lambda function ${lambdaName}. Verify the lambda function name and AWS region are correct.`);
@@ -89,6 +89,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
           gutil.log('AWS API request failed. Check your AWS credentials and permissions.');
         }
       }
+      console.log(data);
       done();
     });
   });
