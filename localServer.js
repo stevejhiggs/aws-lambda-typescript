@@ -1,4 +1,3 @@
-'use strict';
 require('ts-node').register();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -54,7 +53,7 @@ const runServer = (pathToLambda, options) => {
       console.log(`Server started on port ${listener.address().port}`);
     });
   });
-}
+};
 
 module.exports = {
   runServer

@@ -3,31 +3,30 @@ const path = require('path');
 const copy = require('copy');
 const install = require('gulp-install');
 const zip = require('gulp-zip');
-const writeFile = require('write');
 const del = require('del');
 const gutil = require('gulp-util');
 const tsPipeline = require('gulp-webpack-typescript-pipeline');
 const AWS = require('aws-sdk');
 const localServer = require('./localServer');
-var awsLambda = require("node-aws-lambda");
+const awsLambda = require('node-aws-lambda');
 
 const handleError = (msg) => {
-  gutil.log(gutil.colors.red('ERROR!', msg)) ;
+  gutil.log(gutil.colors.red('ERROR!', msg));
   process.exit(1);
-}
+};
 
 const getLambdaConfig = (lambdaDir) => {
   const configPath = path.join(lambdaDir, 'lambda-config.js');
   try {
-    fs.existsSync(configPath);  
+    fs.existsSync(configPath);
     return require(configPath);
-  } catch(e) {
+  } catch (e) {
     return {};
   }
-}
+};
 
 const runLocalServer = (lambdaDir) => {
-  localServer.runServer( path.join(lambdaDir, 'index.ts'), getLambdaConfig(lambdaDir));
+  localServer.runServer(path.join(lambdaDir, 'index.ts'), getLambdaConfig(lambdaDir));
 };
 
 const registerBuildGulpTasks = (gulp, lambdaDir) => {
@@ -36,17 +35,17 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   const pathToLambda = path.join(lambdaDir, 'index.ts');
   const distRootDir = path.join(lambdaDir, 'dist');
   const dist = path.join(distRootDir, lambdaName);
-  
-  //check that lambda exists
+
+  // check that lambda exists
   try {
-    fs.existsSync(pathToLambda);  
-  } catch(e) {
+    fs.existsSync(pathToLambda);
+  } catch (e) {
     console.log(e);
-    handleError(pathToLambda + ' does not exist');
+    handleError(`${pathToLambda} does not exist`);
   }
 
   const runSequence = require('run-sequence').use(gulp);
-  const lambda = new AWS.Lambda({apiVersion: '2015-03-31'}); 
+  const lambda = new AWS.Lambda({ apiVersion: '2015-03-31' });
   AWS.config.region = localOptions.region || 'us-west-2';
 
   const tsOptions = {
@@ -60,16 +59,16 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
 
   gulp.task('lambda:clean', (done) => {
     del(distRootDir).then(() => {
-      done()
+      done();
     });
   });
 
-  gulp.task('lambda:run', (done) => {
+  gulp.task('lambda:run', () => {
     runLocalServer(lambdaDir, lambdaName);
   });
 
   gulp.task('lambda:info', (done) => {
-    lambda.getFunction({FunctionName: lambdaName}, (err, data) => {
+    lambda.getFunction({ FunctionName: lambdaName }, (err) => {
       if (err) {
         if (err.statusCode === 404) {
           gutil.log(`Unable to find lambda function ${lambdaName}. Verify the lambda function name and AWS region are correct.`);
@@ -78,7 +77,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
         }
       }
       done();
-    });  
+    });
   });
 
   gulp.task('lambda:build', ['tsPipeline:build:release'], (done) => {
@@ -88,12 +87,12 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   gulp.task('lambda:npm', () => {
     return gulp.src(path.join(pathToLambda, 'package.json'))
       .pipe(gulp.dest(dist))
-      .pipe(install({production: true})
+      .pipe(install({ production: true })
     );
   });
 
   gulp.task('lambda:zip', ['lambda:build', 'lambda:npm'], () => {
-    return gulp.src([ `${dist}/**/*`, `!${dist}/package.json`, `${dist}/.*`])
+    return gulp.src([`${dist}/**/*`, `!${dist}/package.json`, `${dist}/.*`])
     .pipe(zip(`${lambdaName}.zip`))
     .pipe(gulp.dest(distRootDir));
   });
@@ -113,7 +112,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
 
   gulp.task('lambda:package', (done) => {
     runSequence(
-      'lambda:clean', 
+      'lambda:clean',
       'lambda:zip',
        done
     );
@@ -121,14 +120,14 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
 
   gulp.task('lambda:deploy', (done) => {
     runSequence(
-      'lambda:package', 
+      'lambda:package',
       'lambda:update',
        done
     );
   });
 
   gulp.task('lambda:init', (done) => {
-    copy(path.join(__dirname,'templates','**.*'), lambdaDir, done);
+    copy(path.join(__dirname, 'templates', '**.*'), lambdaDir, done);
   });
 
   gulp.task('lambda', () => {
@@ -137,11 +136,12 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     gulp lambda:run - run your function inside a local express frontend
     gulp lambda:package - package up your function for deployment
     gulp lambda:deploy - package up, then deploy your lambda function
+    gulp lambda:info - display info about your deployed lambda function
     `);
   });
 };
 
-module.exports = { 
+module.exports = {
   registerBuildGulpTasks,
   runLocalServer
 };
