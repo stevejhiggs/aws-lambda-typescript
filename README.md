@@ -41,6 +41,47 @@ By setting your debuggers entry point to the `debug.js` file in the root of your
 
 In order for debugging typescript to work in vscode the "protocol" setting must be set to "inspector" in your launch.json.
 
+Go to the debug tab in visual studio
+at the top where it says "debug" and probably "no configurations" there should be a gear icon. Click it and you should be taken to your launch.json file that will look something like:
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceRoot}\\index.js",
+      "outFiles": [
+          "${workspaceRoot}/out/**/*.js"
+      ]
+    }
+  ]
+}
+```
+
+add the line "protocol": "inspector", to this so we end up with something like:
+
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "protocol": "inspector",
+        "name": "Launch Program",
+        "program": "${workspaceRoot}\\index.js",
+        "outFiles": [
+            "${workspaceRoot}/out/**/*.js"
+        ]
+      }
+  ]
+}
+```
+
+Then you should be able to debug as normal. Also if you use node version 8 or greater it will default to this and the above will be not needed.
+
 ## options 
 
 By altering lambda-config.js in the root of your project you can set the following options:
