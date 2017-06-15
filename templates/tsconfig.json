@@ -1,17 +1,13 @@
 {
   "compilerOptions": {
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
     "moduleResolution": "node",
-    "target": "es2016",
-    "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "es2015",
-      "es2016"
-    ]
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true
   },
   "exclude": [
     "dist",
