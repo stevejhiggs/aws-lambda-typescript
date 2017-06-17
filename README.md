@@ -34,6 +34,10 @@ The following commands are then available:
 * `gulp lambda:deploy` - packages and deploys your function
 * `gulp lambda:info` - get info about the current state of your lambda function
 
+## running locally
+
+after running `gulp lambda:run` you can test your function locally by posting to localhost:9000/
+
 ## debugging
 
 By setting your debuggers entry point to the `debug.js` file in the root of your project you can easily step through your function.
