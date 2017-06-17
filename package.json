@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-typescript",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
   "dependencies": {
+    "@types/aws-lambda": "0.0.13",
     "@types/node": "^7.0.31",
-    "aws-lambda": "^0.1.2",
     "aws-sdk": "^2.72.0",
     "body-parser": "^1.17.2",
     "copy": "^0.3.0",
