@@ -66,7 +66,8 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
       index: pathToLambda
     },
     outputDir: dist,
-    isNodeLibrary: true
+    isNodeLibrary: true,
+    externals: [/aws-sdk/]
   };
 
   tsPipeline.registerBuildGulpTasks(gulp, tsOptions);
