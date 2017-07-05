@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
   "dependencies": {
-    "@types/aws-lambda": "0.0.13",
-    "@types/node": "^7.0.31",
-    "aws-sdk": "^2.72.0",
+    "@types/aws-lambda": "0.0.14",
+    "@types/node": "^8.0.7",
+    "aws-sdk": "^2.80.0",
     "body-parser": "^1.17.2",
     "copy": "^0.3.0",
     "del": "^3.0.0",
@@ -32,14 +32,14 @@
     "gulp": "^3.9.1",
     "gulp-install": "^1.1.0",
     "gulp-util": "^3.0.8",
-    "gulp-webpack-typescript-pipeline": "^6.0.0",
+    "gulp-webpack-typescript-pipeline": "^7.0.0",
     "gulp-zip": "^4.0.0",
     "node-aws-lambda": "^0.1.8",
     "pino-http": "^2.6.1",
-    "run-sequence": "^1.2.2",
-    "ts-node": "^3.0.6"
+    "run-sequence": "^2.0.0",
+    "ts-node": "^3.1.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^15.0.1"
+    "eslint-config-airbnb": "^15.0.2"
   }
 }
