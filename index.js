@@ -65,7 +65,8 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     entryPoints: {
       index: pathToLambda
     },
-    outputDir: dist
+    outputDir: dist,
+    isNodeLibrary: true
   };
 
   tsPipeline.registerBuildGulpTasks(gulp, tsOptions);

@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-typescript",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "gulp": "^3.9.1",
     "gulp-install": "^1.1.0",
     "gulp-util": "^3.0.8",
-    "gulp-webpack-typescript-pipeline": "^7.0.0",
+    "gulp-webpack-typescript-pipeline": "^7.1.0",
     "gulp-zip": "^4.0.0",
     "node-aws-lambda": "^0.1.8",
     "pino-http": "^2.6.1",
