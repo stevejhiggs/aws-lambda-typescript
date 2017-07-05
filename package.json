@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-typescript",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
