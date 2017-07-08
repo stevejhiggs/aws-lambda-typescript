@@ -1405,9 +1405,9 @@ gulp-util@^3.0.0, gulp-util@^3.0.7, gulp-util@^3.0.8:
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-gulp-webpack-typescript-pipeline@^7.2.2:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/gulp-webpack-typescript-pipeline/-/gulp-webpack-typescript-pipeline-7.2.2.tgz#d2563d72f013a1ecaaafa903fc79b0ea782fecdc"
+gulp-webpack-typescript-pipeline@^7.2.3:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/gulp-webpack-typescript-pipeline/-/gulp-webpack-typescript-pipeline-7.2.3.tgz#907681d6f9438965583987d028738e7186c9e2d8"
   dependencies:
     gulp "^3.9.1"
     gulp-util "^3.0.8"
