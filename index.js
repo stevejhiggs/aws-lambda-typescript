@@ -101,14 +101,14 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   });
 
   gulp.task('lambda:npm', () => {
-    return gulp.src(path.join(pathToLambda, 'package.json'))
+    return gulp.src(path.join(path.dirname(pathToLambda), 'package.json'))
       .pipe(gulp.dest(dist))
       .pipe(install({ production: true })
     );
   });
 
   gulp.task('lambda:zip', ['lambda:build', 'lambda:npm'], () => {
-    return gulp.src([`${dist}/**/*`, `!${dist}/package.json`, `${dist}/.*`])
+    return gulp.src([`${dist}/**/*`, `${dist}/.*`])
     .pipe(zip(`${lambdaName}.zip`))
     .pipe(gulp.dest(distRootDir));
   });
