@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-typescript",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
   "dependencies": {
-    "@types/aws-lambda": "0.0.17",
-    "@types/node": "^8.0.34",
-    "aws-sdk": "^2.133.0",
+    "@types/aws-lambda": "0.0.27",
+    "@types/node": "^9.3.0",
+    "aws-sdk": "^2.185.0",
     "body-parser": "^1.18.2",
     "copy": "^0.3.1",
     "del": "^3.0.0",
@@ -32,14 +32,14 @@
     "gulp": "^3.9.1",
     "gulp-install": "^1.1.0",
     "gulp-util": "^3.0.8",
-    "gulp-webpack-typescript-pipeline": "^8.0.0",
-    "gulp-zip": "^4.0.0",
+    "gulp-webpack-typescript-pipeline": "^9.0.1",
+    "gulp-zip": "^4.1.0",
     "node-aws-lambda": "^0.1.8",
-    "pino-http": "^2.6.2",
-    "run-sequence": "^2.2.0",
-    "ts-node": "^3.3.0"
+    "pino-http": "^3.0.1",
+    "run-sequence": "^2.2.1",
+    "ts-node": "^4.1.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^16.0.0"
+    "eslint-config-airbnb": "^16.1.0"
   }
 }
