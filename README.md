@@ -4,7 +4,7 @@ build pipeline for easily building aws lambda functions with typescript
 ## creating your function
 
 * create a new node project and `npm init` it.
-* `npm install --save gulp aws-lambda-typescript`
+* `npm install --save-dev gulp aws-lambda-typescript`
 * create a gulpfile.js file
 * add the following to your gulpfile.js:
 
