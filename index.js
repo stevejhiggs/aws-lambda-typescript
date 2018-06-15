@@ -4,14 +4,15 @@ const copy = require('copy');
 const install = require('gulp-install');
 const zip = require('gulp-zip');
 const del = require('del');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
 const tsPipeline = require('gulp-webpack-typescript-pipeline');
 const AWS = require('aws-sdk');
 const localServer = require('./localServer');
 const awsLambda = require('node-aws-lambda');
+const colors = require('ansi-colors');
 
 const handleError = (msg) => {
-  gutil.log(gutil.colors.red('ERROR!', msg));
+  log(colors.red('ERROR!', msg));
   process.exit(1);
 };
 
@@ -86,9 +87,9 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     lambda.getFunction({ FunctionName: lambdaName }, (err, data) => {
       if (err) {
         if (err.statusCode === 404) {
-          gutil.log(`Unable to find lambda function ${lambdaName}. Verify the lambda function name and AWS region are correct.`);
+          log(`Unable to find lambda function ${lambdaName}. Verify the lambda function name and AWS region are correct.`);
         } else {
-          gutil.log('AWS API request failed. Check your AWS credentials and permissions.');
+          log('AWS API request failed. Check your AWS credentials and permissions.');
         }
       }
       console.log(data);
