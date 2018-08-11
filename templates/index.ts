@@ -1,11 +1,9 @@
 import {Handler} from 'aws-lambda';
 
-const func: Handler = (event, context, callback) => {
-  if (!callback) {
-    return;
-  }
+const func: Handler = async (event, context) => {
+   // Echo back the value in the property key1
+  return Promise.resolve({ key1: `${event.key1}`});
 
-  callback(undefined, { key1: `${event.key1}`});  // Echo back the value in the property key1
 };
 
 export default func;

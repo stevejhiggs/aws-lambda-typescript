@@ -1,3 +1,8 @@
+## 3.0.0
+* typescript 3.0.1
+* default to async / await form of lambda
+* replace express with fastify
+
 ## 2.0.0
 * gulp is now a peer dependancy
 * upgrade to typescript 2.9.2
