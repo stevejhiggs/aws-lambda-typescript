@@ -10,7 +10,8 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "strictFunctionTypes": false,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true
   },
   "exclude": [
     "dist",
