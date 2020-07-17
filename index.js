@@ -9,11 +9,13 @@ const tsPipeline = require('gulp-webpack-typescript-pipeline');
 const AWS = require('aws-sdk');
 const localServer = require('./localServer');
 const awsLambda = require('node-aws-lambda');
-const colors = require('ansi-colors');
 
 const handleError = (msg) => {
-  log(colors.red('ERROR!', msg));
-  process.exit(1);
+  if (err) throw new PluginError('es6Pipeline', err);
+  log('[es6Pipeline]', stats.toString({
+    colors: true,
+    chunks: false
+  }));
 };
 
 const getLambdaConfig = (lambdaDir) => {
@@ -53,7 +55,6 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     handleError(`${pathToLambda} does not exist`);
   }
 
-  const runSequence = require('run-sequence').use(gulp);
   const lambda = new AWS.Lambda({
     apiVersion: '2015-03-31',
     region: config.region || 'us-west-2',
@@ -97,9 +98,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     });
   });
 
-  gulp.task('lambda:build', ['tsPipeline:build:release'], (done) => {
-    done();
-  });
+  gulp.task('lambda:build', gulp.series('tsPipeline:build:release'));
 
   gulp.task('lambda:npm', () => {
     return gulp.src(path.join(path.dirname(pathToLambda), 'package.json'))
@@ -108,35 +107,19 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     );
   });
 
-  gulp.task('lambda:zip', ['lambda:build', 'lambda:npm'], () => {
+  gulp.task('lambda:zip', gulp.series('lambda:build', 'lambda:npm', () => {
     return gulp.src([`${dist}/**/*`, `${dist}/.*`])
     .pipe(zip(`${lambdaName}.zip`))
     .pipe(gulp.dest(distRootDir));
-  });
+  }));
 
   gulp.task('lambda:upload', (done) => {
     awsLambda.deploy(path.join(distRootDir, `${lambdaName}.zip`), config, done);
   });
 
-  gulp.task('lambda:lint', ['tsPipeline:build:dev'], (done) => {
-    done();
-  });
-
-  gulp.task('lambda:package', (done) => {
-    runSequence(
-      'lambda:clean',
-      'lambda:zip',
-       done
-    );
-  });
-
-  gulp.task('lambda:deploy', (done) => {
-    runSequence(
-      'lambda:package',
-      'lambda:upload',
-       done
-    );
-  });
+  gulp.task('lambda:lint', gulp.series('tsPipeline:build:dev'));
+  gulp.task('lambda:package', gulp.series('lambda:clean', 'lambda:zip'));
+  gulp.task('lambda:deploy', gulp.series('lambda:package', 'lambda:upload'));
 
   gulp.task('lambda:init', (done) => {
     copy(path.join(__dirname, 'templates', '**.*'), lambdaDir, done);

@@ -1,3 +1,7 @@
+## 4.0.0
+* gulp 4 support
+* typescript 3.9.1
+
 ## 3.0.0
 * typescript 3.0.1
 * default to async / await form of lambda

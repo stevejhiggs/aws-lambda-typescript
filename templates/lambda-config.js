@@ -5,5 +5,5 @@ module.exports = {
   timeout: 10,
   memorySize: 128,
   publish: false, // default: false,
-  runtime: 'nodejs8.10'
+  runtime: 'nodejs12.x'
 };

@@ -21,7 +21,7 @@ awsLambdaTypescript.registerBuildGulpTasks(gulp, __dirname);
 The following files will be created in the root of your project:
 
 * index.ts - the entry point of your typescript lambda function
-* tslint.json - configures the linter
+* .eslintrc.js - configures the linter
 * tsconfig.json - configures the typescript compiler
 * debug.js - debugging entrypoint allows simple debugging of your function in a local express instance
 * lambda-config.js - contains the deployment details for your function
@@ -44,8 +44,6 @@ By setting your debuggers entry point to the `debug.js` file in the root of your
 
 ### debugging in vscode
 
-In order for debugging typescript to work in vscode the "protocol" setting must be set to "inspector" in your launch.json.
-
 Go to the debug tab in visual studio
 at the top where it says "debug" and probably "no configurations" there should be a gear icon. Click it and you should be taken to your launch.json file that will look something like:
 ```
@@ -65,27 +63,7 @@ at the top where it says "debug" and probably "no configurations" there should b
 }
 ```
 
-add the line "protocol": "inspector", to this so we end up with something like:
-
-```
-{
-  "version": "0.2.0",
-  "configurations": [
-      {
-        "type": "node",
-        "request": "launch",
-        "protocol": "inspector",
-        "name": "Launch Program",
-        "program": "${workspaceRoot}\\index.js",
-        "outFiles": [
-            "${workspaceRoot}/out/**/*.js"
-        ]
-      }
-  ]
-}
-```
-
-Then you should be able to debug as normal. Also if you use node version 8 or greater it will default to this and the above will be not needed.
+Then you should be able to debug as normal.
 
 ## options 
 
