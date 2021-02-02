@@ -1,6 +1,7 @@
 ## 4.0.0
 * gulp 4 support
 * typescript 3.9.1
+* Breaking change: Due to upgrading gulp-webpack-typescript-pipeline to v16 the linter is now eslint rather than tslint (as recommended by typescript)
 
 ## 3.0.0
 * typescript 3.0.1
