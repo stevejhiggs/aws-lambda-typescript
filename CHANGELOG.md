@@ -1,3 +1,7 @@
+## 5.0.0
+
+- switch to newer typescript pipeline with typescript 4 + webpack 5 support
+
 ## 4.0.0
 
 - gulp 4 support
