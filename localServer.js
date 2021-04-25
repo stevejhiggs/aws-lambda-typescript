@@ -1,13 +1,13 @@
 require('ts-node').register();
-const fastify = require('fastify')
+const fastify = require('fastify');
 
 const lambdaAdapter = (lambda, app) => {
   // create a route that can talk to the lambda function
   app.post('/', async (req, res) => {
     try {
-    const result = await lambda(req.body);
+      const result = await lambda(req.body);
       res.send(result);
-    } catch(ex) {
+    } catch (ex) {
       res.code(406).send(ex);
     }
 

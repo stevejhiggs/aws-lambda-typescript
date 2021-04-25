@@ -4,7 +4,8 @@
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/prettier --write '**/*.{js,jsx,ts,tsx,css,html,yaml,json,md}'"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,12 @@
     "gulp": "^4.0.2"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^18.2.0"
+    "eslint-config-airbnb": "^18.2.0",
+    "prettier": "^2.2.1"
+  },
+  "prettier": {
+    "printWidth": 250,
+    "trailingComma": "none",
+    "singleQuote": true
   }
 }

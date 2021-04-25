@@ -12,10 +12,13 @@ const awsLambda = require('node-aws-lambda');
 
 const handleError = (msg) => {
   if (err) throw new PluginError('es6Pipeline', err);
-  log('[es6Pipeline]', stats.toString({
-    colors: true,
-    chunks: false
-  }));
+  log(
+    '[es6Pipeline]',
+    stats.toString({
+      colors: true,
+      chunks: false
+    })
+  );
 };
 
 const getLambdaConfig = (lambdaDir) => {
@@ -27,7 +30,6 @@ const getLambdaConfig = (lambdaDir) => {
     return {};
   }
 };
-
 
 const runLocalServer = (lambdaDir) => {
   localServer.runServer(path.join(lambdaDir, 'index.ts'), getLambdaConfig(lambdaDir));
@@ -101,17 +103,21 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   gulp.task('lambda:build', gulp.series('tsPipeline:build:release'));
 
   gulp.task('lambda:npm', () => {
-    return gulp.src(path.join(path.dirname(pathToLambda), 'package.json'))
+    return gulp
+      .src(path.join(path.dirname(pathToLambda), 'package.json'))
       .pipe(gulp.dest(dist))
-      .pipe(install({ production: true })
-    );
+      .pipe(install({ production: true }));
   });
 
-  gulp.task('lambda:zip', gulp.series('lambda:build', 'lambda:npm', () => {
-    return gulp.src([`${dist}/**/*`, `${dist}/.*`])
-    .pipe(zip(`${lambdaName}.zip`))
-    .pipe(gulp.dest(distRootDir));
-  }));
+  gulp.task(
+    'lambda:zip',
+    gulp.series('lambda:build', 'lambda:npm', () => {
+      return gulp
+        .src([`${dist}/**/*`, `${dist}/.*`])
+        .pipe(zip(`${lambdaName}.zip`))
+        .pipe(gulp.dest(distRootDir));
+    })
+  );
 
   gulp.task('lambda:upload', (done) => {
     awsLambda.deploy(path.join(distRootDir, `${lambdaName}.zip`), config, done);
