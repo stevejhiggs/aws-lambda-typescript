@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-typescript",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "simple build pipeline for creating lambda functions in typescript",
   "main": "index.js",
   "scripts": {
@@ -23,15 +23,15 @@
   },
   "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
   "dependencies": {
-    "@types/aws-lambda": "8.10.75",
+    "@types/aws-lambda": "8.10.76",
     "@types/node": "^14.14.41",
-    "aws-sdk": "^2.892.0",
+    "aws-sdk": "^2.897.0",
     "copy": "^0.3.2",
     "del": "^6.0.0",
     "fancy-log": "^1.3.3",
-    "fastify": "^3.15.0",
+    "fastify": "^3.15.1",
     "gulp-install": "^1.1.0",
-    "gulp-webpack-typescript-pipeline": "^17.0.0",
+    "gulp-webpack-typescript-pipeline": "^17.0.1",
     "gulp-zip": "^5.1.0",
     "node-aws-lambda": "^0.1.8",
     "plugin-error": "^1.0.1",

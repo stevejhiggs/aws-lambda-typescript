@@ -1,3 +1,7 @@
+## 5.1.1
+
+- Fix issue where packaging did not abort if compilation failed
+
 ## 5.1.0
 
 - copy .npmrc file to the lambda package if one exists
