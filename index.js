@@ -21,14 +21,18 @@ const handleError = (msg) => {
   );
 };
 
+const doesFileExistSync = (filePath, silent) => {
+  try {
+    return fs.existsSync(filePath);
+  } catch (e) {
+    if (!silent) { console.log(e) };
+    return false;
+  }
+}
+
 const getLambdaConfig = (lambdaDir) => {
   const configPath = path.join(lambdaDir, 'lambda-config.js');
-  try {
-    fs.existsSync(configPath);
-    return require(configPath);
-  } catch (e) {
-    return {};
-  }
+  return doesFileExistSync(configPath, true) ? require(configPath) : {};
 };
 
 const runLocalServer = (lambdaDir) => {
@@ -50,10 +54,7 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
   }
 
   // check that lambda exists
-  try {
-    fs.existsSync(pathToLambda);
-  } catch (e) {
-    console.log(e);
+  if (!doesFileExistSync(pathToLambda)) {
     handleError(`${pathToLambda} does not exist`);
   }
 
@@ -100,7 +101,16 @@ const registerBuildGulpTasks = (gulp, lambdaDir) => {
     });
   });
 
-  gulp.task('lambda:build', gulp.series('tsPipeline:build:release'));
+  gulp.task('lambda:copyCommonFiles', (done) => {
+    const npmrcFile = path.join(path.dirname(pathToLambda), '.npmrc');
+    if (doesFileExistSync(npmrcFile, true)) {
+      copy(npmrcFile, dist, done);
+    } else {
+      done();
+    }
+  });
+
+  gulp.task('lambda:build', gulp.series('tsPipeline:build:release', 'lambda:copyCommonFiles'));
 
   gulp.task('lambda:npm', () => {
     return gulp

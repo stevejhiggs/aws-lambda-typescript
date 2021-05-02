@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/stevejhiggs/aws-lambda-typescript#readme",
   "dependencies": {
-    "aws-lambda-typescript": "^5.0.0",
-    "gulp": "^3.9.1"
+    "aws-lambda-typescript": "^5.1.0",
+    "gulp": "^4.0.2"
   }
 }

@@ -1,3 +1,7 @@
+## 5.1.0
+
+- copy .npmrc file to the lambda package if one exists
+
 ## 5.0.0
 
 - switch to newer typescript pipeline with typescript 4 + webpack 5 support
