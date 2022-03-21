@@ -2,6 +2,10 @@
 
 build pipeline for easily building aws lambda functions with typescript.
 
+# THIS PROJECT IS NO LONGER SUPPORTED
+
+I no longer use lambda day-to-day and better solutions are now available (e.g https://aws.amazon.com/blogs/compute/building-typescript-projects-with-aws-sam-cli/).
+
 ## creating your function
 
 - create a new node project and `npm init` it.
